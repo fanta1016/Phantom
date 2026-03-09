@@ -36,8 +36,7 @@
 </h1>
 
     <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt dignissim
-        i like rg rsg srga srg sand also jskefjl 
+i am a good goy and i am really gay
     </p>
 
 
@@ -95,18 +94,22 @@
 
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
         <div id="thanks" > 
             <h2 style="color: gray; font-family:Black">Thank You For Visiting :D</h2>
         </div>
     </div>
       <script>
-    // wait until the DOM is fully loaded
+    
     document.addEventListener('DOMContentLoaded', () => {
       const links = document.querySelectorAll('.smooth-link');
 
       links.forEach(link => {
         link.addEventListener('click', function(e) {
-          e.preventDefault(); // stop instant jump
+          e.preventDefault(); 
           const targetId = this.getAttribute('href').substring(1);
           const target = document.getElementById(targetId);
 
@@ -116,26 +119,24 @@
         });
       });
     });
-    // Create the hemisphere glow
+
 const glow = document.createElement('div');
 document.body.appendChild(glow);
 
-// Style it
+// gold loves js
 Object.assign(glow.style, {
-    width: '400px',               // full width of half-circle
-    height: '200px',              // height of half-circle
-    borderRadius: '50% 50% 0 0',  // makes it a half-circle
+    width: '400px',               
+    height: '200px',              
+    borderRadius: '50% 50% 0 0',  
     background: 'radial-gradient(circle at center top, rgba(255,0,0,0.5) 0%, rgba(255,0,0,0) 80%)',
-    filter: 'blur(40px)',         // soft glow
-    position: 'absolute',         // floats over content
-    top: '0',                     // stick to top
-    left: '50%',                  // center horizontally
+    filter: 'blur(40px)',         
+    position: 'absolute',         
+    top: '0',                     
+    left: '50%',                  
     transform: 'translateX(-50%) scale(1)',
-    pointerEvents: 'none',        // allow clicks through
+    pointerEvents: 'none',        
     zIndex: '9999',
 });
-
-// Heartbeat animation
 let scaleUp = true;
 setInterval(() => {
     const currentScale = parseFloat(glow.style.transform.match(/scale\((.*)\)/)?.[1]) || 1;
