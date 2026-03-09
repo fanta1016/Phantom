@@ -1,10 +1,15 @@
+
+
 @media (max-width: 768px) {
-  .row {
-    flex-direction: column; 
-  }
 
   h1 {
-    font-size: 24px
+    font-size: 20px
+  }
+}
+
+@media (max-width: 768px) {
+  .kid {
+    flex: 1 1 100%;  
   }
 }
 
@@ -383,10 +388,97 @@ color: rgb(239, 199, 0);
 
 
 @media (max-width: 768px) {
+    h1{
+        font-size: 20%;
+    }
+    #whole{
+        display: flex;
+        width: 100%;
+    }
+    #kid{
+        width: 50px;
+        height: 50px;
+        gap: 10px;
+    }
   .container {
-    flex-direction: column;
+display: flex;
+
+    flex-direction: wrap;
   }
 }
+
+@media (max-width: 768px) {
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    height: 50%;
+  }
+
+  #whole{
+    width: 100%;
+    
+    
+  }
+
+  .kid {
+    height: 50px;
+    width: 150px;     
+    max-width: 80%;  
+    margin: 10px 0;   
+  }
+
+  
+  #Phantom h1,
+  #About h1,
+  #Skill h1,
+  #Social h1 {
+    font-size: clamp(20px, 40px , 70px);
+    text-align: center;
+  }
+  #About h1{
+    font-size: 67px;
+  }
+  #Skill h1{
+    font-size:67px;
+  }
+  #Social h1{
+    font-size:67px;
+  }
+  #Phantom h1{
+    font-size:67px;
+  }
+  #whole{
+      display: flex;
+    justify-content: center;
+align-items: center;
+margin: none;
+padding: none;
+box-sizing: border-box;
+width: 100%;
+  }
+  #Phantom, #Skill, #Social, #About{
+      display: flex;
+    justify-content: center;
+align-items: center;
+margin: none;
+padding: none;
+width: 100%;
+  }
+body{
+    display: flex;
+    justify-content: center;
+align-items: center;
+margin: none;
+padding: none;
+}
+}
+
+
+
 
 
 
