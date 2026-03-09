@@ -47,12 +47,12 @@ padding-right: 67px;
 
 @font-face {
     font-family: "Black";
-    src: url("/burbankbigcondensed_black.otf");
+    src: url("burbankbigcondensed_black.otf");
 }
 
 @font-face {
     font-family: "Bold";
-    src: url("/burbankbigcondensed_bold.otf");
+    src: url("burbankbigcondensed_bold.otf");
 }
 
 
@@ -376,5 +376,6 @@ color: rgb(239, 199, 0);
     flex-direction: column;
   }
 }
+
 
 
