@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phany</title>
+    <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Changa+One:ital@0;1&family=Fredoka:wght@300..700&family=Press+Start+2P&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/80477dcbed.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <div id="whole">
+        <div id="header">
+            <a href="#Phantom" id="info">
+            <p>
+                Info
+            </p>
+            </a>
+            <a href="#About" id="abby">
+       <p>About Me</p>
+       </a>
+<a href="#Skill"  id="ski">
+       <p>My Skills</p>
+       </a>
+       <a href="#Social" id="soc">
+       <p>Socials</p>
+       </a>
+        </div>
+        <div id="Phantom">
+<h5>hi i am</h5>
+<h1>
+    PHANTOM
+</h1>
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt dignissim
+        i like rg rsg srga srg sand also jskefjl 
+    </p>
+
+
+        </div>
+        <div id="About">
+            <h1>ABOUT ME</h1>
+            <p>i am gay</p>
+        </div>
+        <div id="Skill">
+            <h1>
+                MY SKILLS
+            </h1>
+            <div class="container">
+    <div id="html" class="kid">
+        <h2>HTML</h2>
+    </div>
+        <div id="css" class="kid">
+        <h2>CSS</h2>
+    </div>
+        <div id="js" class="kid">
+        <h2>JS</h2>
+    </div>
+        <div id="chess" class="kid">
+        <h2>CHESS</h2>
+    </div>
+    </div>
+        </div>
+        <div id="Social">
+            <h1>
+                SOCIALS
+            </h1>
+            <div class="container">
+            <div class="kid" id="dis">
+                <a href="https://discord.gg/FbCkhwVp" target="_blank">
+<i class="fa-brands fa-discord" style="font-size: 50px; color: rgb(90, 98, 243);"></i>
+                </a>
+            </div>
+                        <div class="kid" id="in">
+                <a href="https://www.instagram.com/thephany16?igsh=ZHh4bW1qY2hoMmxt" target="_blank">
+                    <i class="fa-brands fa-instagram" style="font-size: 50px;" id="ins"></i>
+                </a>
+            </div>
+                        <div class="kid" id="you">
+                <a href="https://youtube.com/@phantomisnice?si=UvrqTEqcYHPHKpfC" target="_blank">
+                    <i class="fa-brands fa-youtube" style="font-size: 50px; color: red;"></i>
+                </a>
+            </div>
+                        <div class="kid" id="git">
+                <a href="https://github.com/fanta1016" target="_blank">
+                    <i class="fa-brands fa-github" style="font-size: 50px; color: black;"></i>
+                </a>
+            </div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div id="thanks" > 
+            <h2 style="color: gray; font-family:Black">Thank You For Visiting :D</h2>
+        </div>
+    </div>
+      <script>
+    // wait until the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.smooth-link');
+
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault(); // stop instant jump
+          const targetId = this.getAttribute('href').substring(1);
+          const target = document.getElementById(targetId);
+
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    });
+    // Create the hemisphere glow
+const glow = document.createElement('div');
+document.body.appendChild(glow);
+
+// Style it
+Object.assign(glow.style, {
+    width: '400px',               // full width of half-circle
+    height: '200px',              // height of half-circle
+    borderRadius: '50% 50% 0 0',  // makes it a half-circle
+    background: 'radial-gradient(circle at center top, rgba(255,0,0,0.5) 0%, rgba(255,0,0,0) 80%)',
+    filter: 'blur(40px)',         // soft glow
+    position: 'absolute',         // floats over content
+    top: '0',                     // stick to top
+    left: '50%',                  // center horizontally
+    transform: 'translateX(-50%) scale(1)',
+    pointerEvents: 'none',        // allow clicks through
+    zIndex: '9999',
+});
+
+// Heartbeat animation
+let scaleUp = true;
+setInterval(() => {
+    const currentScale = parseFloat(glow.style.transform.match(/scale\((.*)\)/)?.[1]) || 1;
+    const newScale = scaleUp ? currentScale + 0.01 : currentScale - 0.01;
+    glow.style.transform = `translateX(-50%) scale(${newScale})`;
+    
+    if (newScale >= 1.15) scaleUp = false;
+    if (newScale <= 1) scaleUp = true;
+}, 30);
+  </script>
+</body>
+</html>

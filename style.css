@@ -1,0 +1,380 @@
+body{
+    height: 100vh;
+    background:linear-gradient(to top, #000000, rgb(36, 36, 36));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+}
+#whole{
+    scroll-behavior: smooth;
+    overflow-y: auto;
+      width: 90%;
+  max-width: 97%;
+  margin: auto;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+h1{
+  font-size: clamp(24px, 5vw, 48px);
+}
+html{
+    scroll-behavior: smooth;
+}
+
+#header{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+border: solid;
+border-width: 1px;
+border-color: rgb(31, 31, 31);
+gap: 20px;
+padding-right: 67px;
+}
+
+#header p{
+      color: transparent;               
+    -webkit-text-stroke: 0.5px rgb(222, 222, 222);
+    font-family: "Black";
+    font-size: 25px;
+    
+}
+
+@font-face {
+    font-family: "Black";
+    src: url("/burbankbigcondensed_black.otf");
+}
+
+@font-face {
+    font-family: "Bold";
+    src: url("/burbankbigcondensed_bold.otf");
+}
+
+
+#Phantom{
+    border-style: solid;
+    border-width: 2px;
+    
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 500px;
+
+}
+
+#Phantom h1{
+    
+    font-size: 140px;
+     background: linear-gradient(to bottom, #ff0000, #230c0c);
+     font-family: "Bold";
+    -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0px;
+            transition: text-shadow 0.7s ease;
+                -webkit-text-stroke: 1px rgb(214, 12, 12);
+}
+
+#Phantom h5{
+    color:white;
+text-align: left;
+    font-size: 35px;
+    margin: 0px;
+    font-family: "Black";
+                         
+       margin: 0;               
+    text-align: left;        
+    width: auto;            
+    align-self: flex-center; 
+    
+    
+}
+
+#Phantom p{
+    color: rgb(186, 186, 186);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height:1.5;
+    font-family: "Changa One";
+}
+
+#About{
+     border-style: solid;
+   
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 500px;
+  
+}
+
+#About h1{
+        
+    font-size: 140px;
+     background: linear-gradient(to bottom, #e4e800, #2f2a2a);
+     font-family: "Bold";
+    -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0px;
+          transition: text-shadow 0.7s ease;
+              -webkit-text-stroke: 1px rgb(214, 211, 12);
+}
+
+#About p{
+        color: rgb(186, 186, 186);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height:1.5;
+    font-family: "Changa One";
+}
+
+
+#Phantom h1:hover{
+    text-shadow: 0px 0px 5px rgb(137, 23, 0);
+    
+
+}
+#About h1:hover{
+    text-shadow:0px 0px 5px rgba(199, 183, 0, 0.493)
+}
+
+a{
+    border: none;
+    text-decoration: none;
+}
+
+#info:hover{
+text-shadow: 0 0 20px #ff0000;
+
+}
+
+
+
+#info{
+    transition: all 0.5s ease;
+}
+#abby:hover{
+    text-shadow: 0 0 20px rgb(208, 255, 0);
+
+}
+#abby{
+    transition:all 0.5s ease;
+}
+
+#Skill{
+    
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 500px;
+}
+
+#Skill h1{
+        font-size: 140px;
+     background: linear-gradient(to bottom, #6f00ff, #0e013e);
+     font-family: "Bold";
+    -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0px;
+            transition: text-shadow 0.7s ease;
+                -webkit-text-stroke: 1px rgb(112, 30, 255);
+
+}
+
+#Skill h1:hover{
+    text-shadow: 0px 0px 20px rgb(46, 0, 109);
+    
+
+}
+
+#Social{
+         
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 500px;
+}
+
+#Social h1{
+          font-size: 140px;
+     background: linear-gradient(to bottom, #3b7ced, #0e013e);
+     font-family: "Bold";
+    -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0px;
+            transition: text-shadow 0.7s ease;
+                -webkit-text-stroke: 1px rgb(0, 123, 255);
+}
+
+#Social h1:hover{
+    text-shadow: 0px 0px 20px rgb(0, 50, 116);
+
+}
+
+#ski:hover{
+    text-shadow:0px 0px 20px #6f00ff;
+}
+
+#soc:hover{
+    text-shadow:0px 0px 30px #79afff;
+}
+
+#ski{
+    transition: all 0.5s ease;
+}
+
+#soc{
+    transition: all 0.5s ease;
+}
+
+
+#sk{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#sk h2{
+    color:white
+}
+
+#html{
+    background-color: linear-gradient(to right #ff0000 black);
+    
+}
+
+h2{
+    font-family: "Bold";
+    color: white;
+}
+
+.kid{
+border-style: solid;
+border-width: 5px;
+border-color: rgb(46, 46, 46);
+    display: flex;
+justify-content: center;
+align-items: center;
+ background: linear-gradient(to bottom, #2e2e2e, #1b1b1b);
+width: 200px;
+transition: all 0.7s ease;
+margin-left: 20px;
+border-radius: 10px;
+}
+
+.container{
+
+    display: grid;
+    grid-auto-flow: column;   
+    margin-top: 67px;
+height: 100px;
+    
+    border-color: rgb(82, 7, 222);
+    border-left: none;
+    border-right: none;
+    border-bottom:none;
+    border-radius: 10px;
+    
+
+}
+
+#html:hover{
+    box-shadow:0 0 20px orange;
+    transform: translateY(-20px);
+}
+#css:hover{
+    box-shadow:0 0 20px rgb(0, 157, 255);
+        transform: translateY(-20px);
+}
+#js:hover{
+    box-shadow:0 0 20px rgb(255, 217, 0);
+        transform: translateY(-20px);
+}
+#chess:hover{
+    box-shadow:0 0 20px rgb(201, 201, 201);
+        transform: translateY(-20px);
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#Phantom{
+    transition: all 0.5s ease;
+}
+#Phantom:hover{
+    box-shadow: 0 0 10px red;
+        transform: translateY(-7px);
+}
+
+#About{
+    transition: all 0.5s ease;
+}
+#About:hover{
+    box-shadow: 0 0 10px rgb(255, 247, 0);
+            transform: translateY(-7px);
+}
+#Skill{
+    transition: all 0.5s ease;
+}
+#Skill:hover{
+    box-shadow: 0 0 10px rgb(98, 0, 255);
+            transform: translateY(-7px);
+}
+#Social{
+    transition: all 0.5s ease;
+}
+#Social:hover{
+    box-shadow: 0 0 10px rgb(0, 149, 255);
+            transform: translateY(-7px);
+}
+
+#ins{
+color: rgb(239, 199, 0);
+}
+
+#dis:hover{
+    box-shadow: 0 0 10px rgb(73, 79, 255);
+            transform: translateY(-7px);
+            text-shadow: 0 0 10px #3b4aed;
+}
+
+#in:hover{
+    box-shadow: 0 0 10px rgb(255, 162, 0);
+         transform: translateY(-7px);
+            text-shadow: 0 0 10px #ffcc00;
+}
+
+
+
+#you:hover{
+    box-shadow: 0 0 10px rgb(255, 0, 0);
+         transform: translateY(-7px);
+            text-shadow: 0 0 10px #c90000;
+}
+
+#git:hover{
+    box-shadow: 0 0 10px rgb(108, 108, 108);
+         transform: translateY(-7px);
+            text-shadow: 0 0 10px #ededed;
+}
+
+
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+
