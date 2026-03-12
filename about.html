@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flappy Bird - Neo Tokyo</title>
+  <style>
+    :root{ --bg1:#071024; --bg2:#1b0833; --neon:#ff3cb2; --neon2:#00e6ff; }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));font-family:Inter, system-ui, Arial}
+    .wrap{display:flex;align-items:center;justify-content:center;height:100%;padding:20px}
+    canvas{display:block;border-radius:12px;box-shadow:0 15px 40px rgba(0,0,0,.6);background:transparent}
+    .ui{position:fixed;left:20px;top:20px;color:#fff;z-index:10}
+    .btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:#fff;backdrop-filter: blur(6px);cursor:pointer}
+    .title{position:fixed;right:20px;top:20px;color:#fff;font-weight:700;letter-spacing:1px}
+    .instructions{position:fixed;right:20px;bottom:20px;color:#b7d0ffcc;font-size:13px}
+    /* Small screens */
+    @media (max-width:480px){.ui{left:10px;top:10px}.title{right:10px;top:10px}} 
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="game"></canvas>
+  </div>
+  <div class="ui">
+    <div style="margin-bottom:8px"><button id="restart" class="btn">Restart</button></div>
+    <div style="color:#cfe8ff; font-weight:600">Score: <span id="score">0</span></div>
+    <div style="color:#ff9ad6; font-size:13px">Best: <span id="best">0</span></div>
+  </div>
+  <div class="title">Flappy — Neo Tokyo (Made by Sameer Singha Tamang)</div>
+  <div class="instructions">Controls: Space / Click / Tap — Avoid neon pillars</div>
+
+  <script>
+    // Responsive canvas
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    let DPR = window.devicePixelRatio || 1;
+
+    function resize() {
+      const targetW = Math.min(window.innerWidth - 40, 900);
+      const targetH = Math.min(window.innerHeight - 120, 700);
+      canvas.style.width = targetW + 'px';
+      canvas.style.height = targetH + 'px';
+      canvas.width = Math.floor(targetW * DPR);
+      canvas.height = Math.floor(targetH * DPR);
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Game constants
+    const GRAVITY = 0.45;
+    const FLAP = -8.5;
+    const PIPE_GAP = 150;
+    const PIPE_WIDTH = 70;
+    const PIPE_SPEED = 2.2;
+
+    // State
+    let bird = { x: 100, y: 150, vy: 0, radius: 16 };
+    let pipes = [];
+    let frame = 0;
+    let score = 0;
+    let best = Number(localStorage.getItem('flappy_best') || 0);
+    let gameOver = false;
+    let started = false;
+
+    document.getElementById('best').textContent = best;
+
+    // Input
+    function flap() {
+      bird.vy = FLAP;
+      started = true;
+      if (gameOver) reset();
+    }
+    window.addEventListener('keydown', e => {
+      if (e.code === 'Space') { e.preventDefault(); flap(); }
+    });
+    window.addEventListener('pointerdown', flap);
+    document.getElementById('restart').addEventListener('click', reset);
+
+    // Utilities
+    function rand(min,max){ return Math.random()*(max-min)+min }
+
+    // Background neon city
+    function drawBackground(w,h, t){
+      // sky gradient
+      const g = ctx.createLinearGradient(0,0,0,h);
+      g.addColorStop(0,'#020617'); g.addColorStop(0.45,'#10042a'); g.addColorStop(1,'#0a0a12');
+      ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+
+      // glowing moon / sun
+      ctx.save();
+      const moonX = w * 0.8 + Math.sin(t*0.0015)*20;
+      const moonY = h * 0.18 + Math.cos(t*0.0013)*10;
+      const radial = ctx.createRadialGradient(moonX, moonY, 10, moonX, moonY, 120);
+      radial.addColorStop(0, 'rgba(255,92,184,0.9)');
+      radial.addColorStop(0.4, 'rgba(255,92,184,0.18)');
+      radial.addColorStop(1, 'rgba(255,92,184,0)');
+      ctx.fillStyle = radial; ctx.beginPath(); ctx.arc(moonX, moonY, 90,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+
+      // distant buildings
+      for(let i=0;i<8;i++){
+        const bx = (i/8)*w + ((t*0.02)%(w/8));
+        const bw = rand(40,100);
+        const bh = rand(h*0.2, h*0.45);
+        const by = h - bh - 20;
+        ctx.fillStyle = 'rgba(8,5,20,0.8)'; ctx.fillRect(bx,by,bw,bh);
+        // windows neon
+        for(let y=by+10;y<by+bh-10;y+=22){
+          for(let x=bx+8;x<bx+bw-8;x+=14){
+            if (Math.random()<0.18) ctx.fillStyle = (Math.random()<0.5? 'rgba(0,230,255,0.12)':'rgba(255,60,180,0.12)');
+            else ctx.fillStyle = 'rgba(0,0,0,0.05)';
+            ctx.fillRect(x,y,8,12);
+          }
+        }
+      }
+
+      // foreground skyline silhouette with neon outlines
+      ctx.save(); ctx.strokeStyle = 'rgba(0,230,255,0.04)'; ctx.lineWidth = 1.5;
+      let x = -50;
+      while(x < w+200){
+        const bw = rand(30,80); const bh = rand(h*0.08, h*0.26);
+        ctx.fillStyle = '#020214'; ctx.fillRect(x, h - bh - 10, bw, bh);
+        // neon edge
+        ctx.strokeRect(x, h - bh - 10, bw, bh);
+        x += bw + Math.floor(rand(6,28));
+      }
+      ctx.restore();
+    }
+
+    // Pipes
+    function addPipe() {
+      const h = canvas.height / DPR;
+      const topH = rand(60, h - PIPE_GAP - 120);
+      pipes.push({ x: canvas.width/DPR + 40, top: topH, width: PIPE_WIDTH, passed: false });
+    }
+
+    function reset(){
+      bird = { x: 100, y: 150, vy: 0, radius: 16 };
+      pipes = [];
+      frame = 0; score = 0; gameOver = false; started = false;
+      document.getElementById('score').textContent = score;
+    }
+
+    function collideRectCircle(rx, ry, rw, rh, cx, cy, cr){
+      // find closest point
+      const closestX = Math.max(rx, Math.min(cx, rx+rw));
+      const closestY = Math.max(ry, Math.min(cy, ry+rh));
+      const dx = cx - closestX; const dy = cy - closestY;
+      return (dx*dx + dy*dy) <= cr*cr;
+    }
+
+    function update(dt) {
+      if (!started) return; // freeze until first flap
+      bird.vy += GRAVITY;
+      bird.y += bird.vy;
+
+      // pipes move
+      for (let p of pipes) p.x -= PIPE_SPEED;
+
+      // remove offscreen
+      if (pipes.length && pipes[0].x + pipes[0].width < -50) pipes.shift();
+
+      // add pipes periodically
+      if (frame % 120 === 0) addPipe();
+
+      // scoring & collisions
+      for (let p of pipes) {
+        if (!p.passed && p.x + p.width < bird.x) { p.passed = true; score++; document.getElementById('score').textContent = score; if (score>best){ best = score; localStorage.setItem('flappy_best', best); document.getElementById('best').textContent = best; } }
+        // top pipe rect
+        const pw = p.width, px = p.x, topH = p.top, gap = PIPE_GAP;
+        const h = canvas.height / DPR;
+        // top collision
+        if (collideRectCircle(px, 0, pw, topH, bird.x, bird.y, bird.radius) || collideRectCircle(px, topH+gap, pw, h, bird.x, bird.y, bird.radius)) {
+          gameOver = true;
+        }
+      }
+
+      // ground collision
+      const groundY = canvas.height / DPR - 10;
+      if (bird.y + bird.radius > groundY) gameOver = true;
+
+      // ceiling
+      if (bird.y - bird.radius < 0) { bird.y = bird.radius; bird.vy = 0 }
+
+      if (gameOver) started = false;
+    }
+
+    function draw(t) {
+      const w = canvas.width / DPR; const h = canvas.height / DPR;
+      drawBackground(w,h,t);
+
+      // draw pipes
+      for (let p of pipes) {
+        // neon pipe body
+        ctx.fillStyle = '#081226'; ctx.fillRect(p.x, 0, p.width, p.top);
+        ctx.fillRect(p.x, p.top + PIPE_GAP, p.width, h - (p.top + PIPE_GAP) - 10);
+        // neon outline
+        ctx.strokeStyle = 'rgba(0,230,255,0.15)'; ctx.lineWidth = 3; ctx.strokeRect(p.x+1, p.top+1, p.width-2, p.top-1);
+        ctx.strokeRect(p.x+1, p.top + PIPE_GAP +1, p.width-2, h - (p.top + PIPE_GAP) - 12);
+        // cap glow
+        ctx.save(); ctx.shadowColor = 'rgba(255,60,180,0.6)'; ctx.shadowBlur = 16; ctx.fillStyle = 'rgba(255,60,180,0.06)'; ctx.fillRect(p.x-6, p.top - 26, p.width+12, 16); ctx.restore();
+      }
+
+      // draw bird - neon circle with wing
+      ctx.save();
+      ctx.translate(bird.x, bird.y);
+      // body glow
+      ctx.beginPath(); ctx.fillStyle = '#ff8ad6'; ctx.arc(0,0,bird.radius,0,Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.beginPath(); ctx.fillStyle = 'rgba(0,230,255,0.18)'; ctx.arc(-6,-4, bird.radius-2,0,Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+      // eye
+      ctx.fillStyle = '#0b1020'; ctx.beginPath(); ctx.arc(4,-2,4,0,Math.PI*2); ctx.fill();
+      // wing (animated)
+      const wingAngle = Math.sin(frame*0.18) * 0.9;
+      ctx.save(); ctx.rotate(wingAngle); ctx.fillStyle = '#ff4ea9'; ctx.fillRect(-8, bird.radius-6, 18, 6); ctx.restore();
+      ctx.restore();
+
+      // ground
+      ctx.fillStyle = '#050314'; ctx.fillRect(0, h-10, w, 10);
+      // neon ground line
+      ctx.strokeStyle = 'rgba(0,230,255,0.06)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0,h-10); ctx.lineTo(w,h-10); ctx.stroke();
+
+      // HUD when not started
+      if (!started && !gameOver) {
+        ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.font = '18px system-ui'; ctx.textAlign = 'center'; ctx.fillText('Press Space or Tap to Start', w/2, h/2 - 40);
+      }
+
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(255,20,120,0.95)'; ctx.font = 'bold 42px system-ui'; ctx.textAlign = 'center'; ctx.fillText('GAME OVER', w/2, h/2 - 20);
+        ctx.font = '20px system-ui'; ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillText('Click Restart or Tap to Play Again', w/2, h/2 + 14);
+      }
+    }
+
+    // main loop
+    let last = performance.now();
+    function loop(now){
+      const dt = now - last; last = now; frame++;
+      update(dt);
+      draw(now);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // start with a couple of pipes preloaded
+    addPipe(); addPipe();
+
+  </script>
+</body>
+</html>
